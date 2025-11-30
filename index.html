@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bird Game 3 - Воздушные бои на птицах</title>
+<style>
+  /* Общие стили */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    /* Добавляем фоновое изображение по ссылке */
+    background-image: url('https://avatars.mds.yandex.net/i?id=84b42d6a1a2ee476e0042696d399fb4d3f020ac5-16918372-images-thumbs&n=13');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Добавляем тень или полупрозрачность для читаемости текста */
+    background-attachment: fixed;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Снежинки для праздничного эффекта (опционально, можно убрать) */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url("https://avatars.mds.yandex.net/i?id=30d848b1dfd91fb917ee5b3f6b835a4e9637f8e8-16110730-images-thumbs&n=13");
+    background-repeat: repeat;
+    opacity: 0.2;
+    pointer-events: none;
+    animation: snow 20s linear infinite;
+  }
+
+  @keyframes snow {
+    0% {background-position: 0 0;}
+    100% {background-position: 0 1000px;}
+  }
+
+  /* Контейнеры и стили остались те же, чтобы не ухудшить читаемость */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  /* остальной CSS без изменений, чтобы сохранить стиль сайта */
+
+  /* Шапка */
+  header {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .logo-icon {
+    margin-right: 10px;
+    font-size: 30px;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+  }
+
+  .nav-links li {
+    margin-left: 30px;
+  }
+
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover {
+    color: #ffd700;
+  }
+
+  /* Главный экран */
+  .hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+    z-index: 2;
+    color: #fff;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  }
+
+  .hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: #ff4d4d;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .cta-button:hover {
+    background: #ff7f7f;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Об игре */
+  .about {
+    padding: 100px 0;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 36px;
+    position: relative;
+    color: #ffd700;
+  }
+
+  .section-title:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #ffd700;
+    margin: 15px auto;
+    border-radius: 2px;
+  }
+
+  .about-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    flex-wrap: wrap;
+  }
+
+  .about-text {
+    flex: 1;
+  }
+
+  .about-text h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+
+  .about-text p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #ddd;
+  }
+
+  .game-preview {
+    flex: 1;
+    position: relative;
+    height: 300px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+
+  .preview-birds {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bird {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+    animation: fly 15s linear infinite;
+  }
+
+  .bird:nth-child(2) {
+    background: #ff4d4d;
+    top: 30%;
+    left: 20%;
+    animation-delay: -5s;
+    animation-duration: 12s;
+  }
+
+  .bird:nth-child(3) {
+    background: #00ffcc;
+    top: 60%;
+    left: 40%;
+    animation-delay: -10s;
+    animation-duration: 18s;
+  }
+
+  @keyframes fly {
+    0% {
+      transform: translateX(-100px) translateY(0) rotate(0deg);
+    }
+    25% {
+      transform: translateX(25%) translateY(50px) rotate(90deg);
+    }
+    50% {
+      transform: translateX(50%) translateY(0) rotate(180deg);
+    }
+    75% {
+      transform: translateX(75%) translateY(-50px) rotate(270deg);
+    }
+    100% {
+      transform: translateX(calc(100% + 100px)) translateY(0) rotate(360deg);
+    }
+  }
+
+  /* Особенности */
+  .features {
+    padding: 100px 0;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+
+  .feature-card {
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+    backdrop-filter: blur(5px);
+    color: #fff;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255,255,255,0.2);
+  }
+
+  .feature-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #ffd700;
+  }
+
+  /* Статус разработки */
+  .development {
+    padding: 100px 0;
+    background: rgba(0,0,0,0.4);
+    text-align: center;
+  }
+
+  .progress-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .progress-bar {
+    height: 20px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .progress {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700, #ff4d4d);
+    border-radius: 10px;
+    width: 35%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255,215,0,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,215,0,0); }
+  }
+
+  .progress-text {
+    font-size: 18px;
+    margin-bottom: 40px;
+    color: #fff;
+  }
+
+  /* Подписка */
+  .subscribe {
+    padding: 100px 0;
+    text-align: center;
+  }
+
+  .subscribe h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #ffd700;
+  }
+
+  .subscribe p {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .subscribe-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    display: flex;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .form-input {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 30px 0 0 30px;
+    font-size: 16px;
+    outline: none;
+  }
+
+  .form-button {
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 0 25px;
+    border-radius: 0 30px 30px 0;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .form-button:hover {
+    background: #ff7f7f;
+  }
+
+  /* Подвал */
+  footer {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .social-links {
+    margin-bottom: 20px;
+  }
+
+  .social-links a {
+    display: inline-block;
+    margin: 0 10px;
+    color: #fff;
+    font-size: 24px;
+    transition: color 0.3s;
+  }
+
+  .social-links a:hover {
+    color: #ffd700;
+  }
+
+  .copyright {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  /* Адаптивность */
+  @media(max-width:768px) {
+    .nav-links {
+      display: none;
+    }
+    .hero h1 {
+      font-size: 36px;
+    }
+    .about-content {
+      flex-direction: column;
+    }
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Стили для раздела "Что нового?" */
+  .news {
+    padding: 100px 0;
+    background: rgba(0, 0, 0, 0.4);
+    text-align: center;
+  }
+
+  .news .section-title {
+    margin-bottom: 40px;
+    font-size: 36px;
+    color: #ffd700;
+  }
+
+  .news-list {
+    list-style: disc inside;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #ddd;
+  }
+
+  .news-list li {
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+  <!-- Шапка -->
+<header>
+  <div class="container">
+    <nav>
+      <div class="logo">
+        <span class="logo-icon">🦅</span>
+        <span>Bird Game 3</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#about">Об игре</a></li>
+        <li><a href="#news">Что нового?</a></li>
+        <li><a href="#features">Особенности</a></li>
+        <li><a href="#development">Разработка</a></li>
+        <li><a href="#subscribe">Подписка</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Главный экран -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Bird Game 3: Воздушные бои на птицах</h1>
+      <p>Приготовьтесь к эпическим воздушным сражениям в мире, где птицы - это боевые машины! Уникальная игра в жанре экшн, которая находится в разработке.</p>
+      <a href="#subscribe" class="cta-button">Узнать первым о релизе</a>
+    </div>
+  </div>
+</section>
+
+<!-- Об игре -->
+<section id="about" class="about">
+  <div class="container">
+    <h2 class="section-title">Об игре</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <h3>Новое слово в жанре воздушных боев</h3>
+        <p>Bird Game 3 - это инновационная игра, где вы становитесь пилотом боевой птицы в фантастическом мире. Сражайтесь с врагами, выполняйте миссии и улучшайте своего пернатого бойца.</p>
+        <p>Игра сочетает в себе динамичные воздушные бои, стратегические элементы и увлекательный сюжет. Каждая птица обладает уникальными характеристиками и способностями.</p>
+        <p>Присоединяйтесь к нашему сообществу и следите за разработкой!</p>
+      </div>
+      <div class="game-preview">
+        <div class="preview-birds">
+          <div class="bird"></div>
+          <div class="bird"></div>
+          <div class="bird"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Раздел "Что нового?" -->
+<section id="news" class="news">
+  <div class="container">
+    <h2 class="section-title">Что нового?</h2>
+    <ul class="news-list">
+      <li><strong>Начало работ. 30.11.2025</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- Особенности -->
+<section id="features" class="features">
+  <div class="container">
+    <h2 class="section-title">Особенности игры</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚔️</div>
+        <h3>Динамичные бои</h3>
+        <p>Сражайтесь в воздухе, используя уникальные способности птиц и тактические приемы.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🦅</div>
+        <h3>Разнообразие птиц</h3>
+        <p>Выбирайте из десятков видов птиц, каждый со своими характеристиками и оружием.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Огромный мир</h3>
+        <p>Исследуйте разнообразные локации от облачных городов до древних руин.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <h3>Мультиплеер</h3>
+        <p>Сражайтесь с друзьями или игроками со всего мира в захватывающих PvP-битвах.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔧</div>
+        <h3>Кастомизация</h3>
+        <p>Улучшаем и модифицируем птиц, создавая уникальных боевых компаньонов.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <h3>Увлекательный сюжет</h3>
+        <p>Погрузитесь в эпическую историю о войне кланов и древних пророчествах.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Статус разработки -->
+<section id="development" class="development">
+  <div class="container">
+    <h2 class="section-title">Статус разработки</h2>
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+      <p class="progress-text">Разработка ведется полным ходом! На данный момент завершено 35% работы над игрой.</p>
+      <p>Мы работаем над созданием захватывающего геймплея, проработанной графики и сбалансированных механик.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Подписка -->
+<section id="subscribe" class="subscribe">
+  <div class="container">
+    <h2 class="section-title">Будь в курсе!</h2>
+    <p>Подпишитесь на рассылку, чтобы первыми узнавать о новостях разработки, бета-тестировании и релизе игры.</p>
+    <div class="subscribe-form">
+      <div class="form-group">
+        <input type="email" class="form-input" placeholder="Ваш email" required>
+        <button class="form-button">Подписаться</button>
+      </div>
+      <p>Мы не спамим и уважаем вашу конфиденциальность</p>
+    </div>
+  </div>
+</section>
+
+<!-- Подвал -->
+<footer>
+  <div class="container">
+    <div class="social-links">
+      <a href="#">📘</a>
+      <a href="#">🐦</a>
+      <a href="#">📷</a>
+      <a href="#">📺</a>
+    </div>
+    <p class="copyright">© 2025 Bird Game 3. Все права защищены. Игра находится в разработке.</p>
+  </div>
+</footer>
+
+<script>
+  // Скрипт для анимации и плавной прокрутки остался без изменений
+  document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+      section.style.opacity = 0;
+      section.style.transform = 'translateY(20px)';
+      section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(section);
+    });
+
+    document.querySelector('.subscribe-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const emailInput = this.querySelector('.form-input');
+      if (emailInput.value) {
+        alert('Спасибо за подписку! Мы сообщим вам о новостях игры.');
+        emailInput.value = '';
+      }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
