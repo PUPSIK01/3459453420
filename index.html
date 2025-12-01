@@ -201,21 +201,69 @@
     margin-bottom: 15px;
   }
 
-  /* Новости */
-  #news {
-    background: rgba(0,0,0,0.4);
+  /* Стиль для раздела "Что нового?" */
+  .news-section {
+    background: transparent;
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
+  /* Жёлтая карточка с необычной формой */
+  .news-card {
+    background-color: #ffd700;
+    padding: 40px 50px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+    background: linear-gradient(135deg, #ffd700, #ffcc00);
+    clip-path: polygon(
+      0% 15%, 5% 5%, 15% 0%, 85% 0%, 95% 5%, 100% 15%, 100% 85%, 95% 95%, 85% 100%, 15% 100%, 5% 95%, 0% 85%
+    );
+    animation: float 3s ease-in-out infinite;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  /* Анимация плавания карточки */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotateX(0);
+    }
+    50% {
+      transform: translateY(-10px) rotateX(5deg);
+    }
+  }
+
+  /* Стиль для текста внутри карточки */
   .news-list {
-    max-width: 800px;
-    margin: 0 auto;
-    list-style: disc inside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
   }
 
   .news-list li {
-    margin-bottom: 15px;
-    font-size: 16px;
-    color: #ddd;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+
+  .news-list li:hover {
+    transform: scale(1.05);
+  }
+
+  .news-list strong {
+    color: #000;
+    font-size: 20px;
   }
 
   /* Особенности */
@@ -371,6 +419,19 @@
     .buttons {
       flex-direction: column;
     }
+    .hero h1 {
+      font-size: 36px;
+    }
+    .hero p {
+      font-size: 18px;
+    }
+    .news-card {
+      padding: 30px 20px;
+      margin: 0 10px;
+    }
+    .news-list strong {
+      font-size: 18px;
+    }
   }
 </style>
 </head>
@@ -421,20 +482,24 @@
       </div>
       <!-- Можно вставить изображение или анимацию -->
       <div style="flex:1;text-align:center;">
-        <img src="https://i.imgur.com/your-image.png" alt="Bird Game 3" style="max-width:100%; border-radius:10px;">
+        <div style="width:100%;height:300px;background:linear-gradient(135deg, #ffd700, #ff4d4d);border-radius:20px;display:flex;align-items:center;justify-content:center;color:#333;font-weight:bold;font-size:24px;">
+          🦅 Изображение игры
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Что нового -->
-<section id="news">
+<section id="news" class="news-section">
   <div class="container">
     <h2 class="section-title">Что нового?</h2>
-    <ul class="news-list">
-      <li><strong>Начало работ. 30.11.2025</strong></li>
-      <li><strong>Обновленный сайт. 30.11.2025</strong></li>
-    </ul>
+    <div class="news-card">
+      <ul class="news-list">
+        <li><strong>Начало работ. 30.11.2025</strong></li>
+        <li><strong>Обновленный сайт. 30.11.2025</strong></li>
+      </ul>
+    </div>
   </div>
 </section>
 
