@@ -27,6 +27,7 @@
     width: 100%;
     top: 0;
     z-index: 999;
+    backdrop-filter: blur(10px);
   }
 
   .container {
@@ -117,6 +118,7 @@
     gap: 20px;
   }
 
+  /* ОБНОВЛЕННЫЕ КНОПКИ */
   .cta-button, .download-button {
     padding: 14px 30px;
     border-radius: 30px;
@@ -126,26 +128,61 @@
     font-size: 16px;
     transition: all 0.3s;
     text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .cta-button {
-    background-color: #ff4d4d;
+    background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
     color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
   }
 
   .cta-button:hover {
-    background-color: #ff7f7f;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ff7f7f, #ff4d4d);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 77, 77, 0.6);
+  }
+
+  .cta-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(255, 77, 77, 0.4);
   }
 
   .download-button {
-    background-color: #4CAF50;
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
     color: #fff;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
   }
 
   .download-button:hover {
-    background-color: #66bb6a;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #66bb6a, #4CAF50);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+  }
+
+  .download-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(76, 175, 80, 0.4);
+  }
+
+  .cta-button::before, .download-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .cta-button:hover::before, .download-button:hover::before {
+    left: 100%;
   }
 
   /* Разделы */
@@ -286,10 +323,12 @@
     text-align: center;
     backdrop-filter: blur(5px);
     transition: transform 0.3s;
+    border: 1px solid rgba(255,255,255,0.1);
   }
 
   .feature-card:hover {
     transform: translateY(-10px);
+    background: rgba(255,255,255,0.15);
   }
 
   .feature-icon {
@@ -366,21 +405,52 @@
     border: none;
     font-size: 16px;
     outline: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
   }
 
+  .form-input::placeholder {
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ОБНОВЛЕННАЯ КНОПКА ПОДПИСКИ */
   .form-button {
-    background: #ff4d4d;
+    background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
     color: #fff;
     padding: 15px 25px;
     border: none;
     border-radius: 0 30px 30px 0;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
   }
 
   .form-button:hover {
-    background: #ff7f7f;
+    background: linear-gradient(135deg, #ff7f7f, #ff4d4d);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 77, 77, 0.4);
+  }
+
+  .form-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(255, 77, 77, 0.4);
+  }
+
+  .form-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .form-button:hover::before {
+    left: 100%;
   }
 
   /* Подвал */
@@ -431,6 +501,16 @@
     }
     .news-list strong {
       font-size: 18px;
+    }
+    .form-group {
+      flex-direction: column;
+    }
+    .form-input {
+      border-radius: 30px 30px 0 0;
+      margin-bottom: 1px;
+    }
+    .form-button {
+      border-radius: 0 0 30px 30px;
     }
   }
 </style>
@@ -498,6 +578,7 @@
       <ul class="news-list">
         <li><strong>Начало работ. 30.11.2025</strong></li>
         <li><strong>Обновленный сайт. 30.11.2025</strong></li>
+        <li><strong>Создан Мультиплеер. 4.12.2025</strong></li>
       </ul>
     </div>
   </div>
