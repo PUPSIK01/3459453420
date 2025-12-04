@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Bird Game 3 - Воздушные бои на птицах</title>
 <style>
-  /* Общие стили */
   * {
     margin: 0;
     padding: 0;
@@ -19,7 +18,6 @@
     line-height: 1.6;
   }
 
-  /* Шапка */
   header {
     background: rgba(0,0,0,0.7);
     padding: 20px 0;
@@ -76,7 +74,6 @@
     color: #ffcc00;
   }
 
-  /* Главный блок */
   .hero {
     height: 100vh;
     display: flex;
@@ -118,7 +115,6 @@
     gap: 20px;
   }
 
-  /* ОБНОВЛЕННЫЕ КНОПКИ */
   .cta-button, .download-button {
     padding: 14px 30px;
     border-radius: 30px;
@@ -185,7 +181,6 @@
     left: 100%;
   }
 
-  /* Разделы */
   section {
     padding: 80px 20px;
   }
@@ -208,7 +203,6 @@
     border-radius: 2px;
   }
 
-  /* Об игре */
   #about {
     background: rgba(0,0,0,0.4);
   }
@@ -238,7 +232,6 @@
     margin-bottom: 15px;
   }
 
-  /* Стиль для раздела "Что нового?" */
   .news-section {
     background: transparent;
     padding: 80px 20px;
@@ -247,7 +240,6 @@
     align-items: center;
   }
 
-  /* Жёлтая карточка с необычной формой */
   .news-card {
     background-color: #ffd700;
     padding: 40px 50px;
@@ -265,7 +257,6 @@
     perspective: 1000px;
   }
 
-  /* Анимация плавания карточки */
   @keyframes float {
     0%, 100% {
       transform: translateY(0) rotateX(0);
@@ -275,7 +266,6 @@
     }
   }
 
-  /* Стиль для текста внутри карточки */
   .news-list {
     list-style: none;
     padding: 0;
@@ -303,7 +293,6 @@
     font-size: 20px;
   }
 
-  /* Особенности */
   #features {
     background: rgba(0,0,0,0.4);
   }
@@ -337,7 +326,6 @@
     color: #ffd700;
   }
 
-  /* Статус разработки */
   #development {
     background: rgba(0,0,0,0.4);
   }
@@ -375,7 +363,6 @@
     color: #fff;
   }
 
-  /* Подписка */
   #subscribe {
     background: rgba(0,0,0,0.4);
     text-align: center;
@@ -413,7 +400,6 @@
     color: rgba(255,255,255,0.7);
   }
 
-  /* ОБНОВЛЕННАЯ КНОПКА ПОДПИСКИ */
   .form-button {
     background: linear-gradient(135deg, #ff4d4d, #ff1a1a);
     color: #fff;
@@ -453,22 +439,48 @@
     left: 100%;
   }
 
-  /* Подвал */
   footer {
     background: rgba(0,0,0,0.8);
     padding: 40px 20px;
     text-align: center;
   }
 
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
   .social-links a {
-    margin: 0 10px;
-    font-size: 24px;
-    color: #fff;
-    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   }
 
   .social-links a:hover {
-    color: #ffd700;
+    background: rgba(255,215,0,0.3);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+  }
+
+  .social-icon {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+  }
+
+  .social-links a:hover .social-icon {
+    transform: scale(1.1);
   }
 
   .copyright {
@@ -477,7 +489,6 @@
     opacity: 0.7;
   }
 
-  /* Адаптивность */
   @media(max-width:768px) {
     nav {
       flex-direction: column;
@@ -512,12 +523,22 @@
     .form-button {
       border-radius: 0 0 30px 30px;
     }
+    .social-links {
+      gap: 20px;
+    }
+    .social-links a {
+      width: 60px;
+      height: 60px;
+    }
+    .social-icon {
+      width: 28px;
+      height: 28px;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Шапка -->
 <header>
   <div class="container">
     <nav>
@@ -535,7 +556,6 @@
   </div>
 </header>
 
-<!-- Главный блок -->
 <section class="hero" id="top">
   <div class="container">
     <div class="hero-content">
@@ -549,7 +569,6 @@
   </div>
 </section>
 
-<!-- Об игре -->
 <section id="about">
   <div class="container">
     <h2 class="section-title">Об игре</h2>
@@ -560,7 +579,6 @@
         <p>Игра сочетает в себе динамичные воздушные бои, стратегические элементы и увлекательный сюжет. Каждая птица обладает уникальными характеристиками и способностями.</p>
         <p>Следите за новостями и присоединяйтесь к сообществу!</p>
       </div>
-      <!-- Можно вставить изображение или анимацию -->
       <div style="flex:1;text-align:center;">
         <div style="width:100%;height:300px;background:linear-gradient(135deg, #ffd700, #ff4d4d);border-radius:20px;display:flex;align-items:center;justify-content:center;color:#333;font-weight:bold;font-size:24px;">
           🦅 Изображение игры
@@ -570,7 +588,6 @@
   </div>
 </section>
 
-<!-- Что нового -->
 <section id="news" class="news-section">
   <div class="container">
     <h2 class="section-title">Что нового?</h2>
@@ -584,7 +601,6 @@
   </div>
 </section>
 
-<!-- Особенности -->
 <section id="features">
   <div class="container">
     <h2 class="section-title">Особенности игры</h2>
@@ -623,7 +639,6 @@
   </div>
 </section>
 
-<!-- Статус разработки -->
 <section id="development">
   <div class="container">
     <h2 class="section-title">Статус разработки</h2>
@@ -637,12 +652,11 @@
   </div>
 </section>
 
-<!-- Подписка -->
 <section id="subscribe">
   <div class="container">
     <h2 class="section-title">Будь в курсе!</h2>
-    <p>Подпишитесь на рассылку, чтобы первыми узнавать о новостях разработки, бета-тестировании и релизе игры.</p>
-    <form class="subscribe-form" onsubmit="alert('Спасибо за подписку!'); return false;">
+      <p>Подпишитесь на рассылку, чтобы первыми узнавать о новостях разработки, бета-тестировании и релизе игры.</p>
+      <form class="subscribe-form" onsubmit="alert('Спасибо за подписку!'); return false;">
       <div class="form-group">
         <input type="email" class="form-input" placeholder="Ваш email" required>
         <button class="form-button">Подписаться</button>
@@ -651,21 +665,26 @@
   </div>
 </section>
 
-<!-- Подвал -->
 <footer>
   <div class="container">
+    <h3 style="text-align: center; margin-bottom: 20px; color: #ffd700;">Мы в социальных сетях</h3>
     <div class="social-links">
-      <a href="#">📘</a>
-      <a href="#">🐦</a>
-      <a href="#">📷</a>
-      <a href="#">📺</a>
+      <a href="https://vk.com/club234394898" target="_blank" title="ВКонтакте">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/VK.com-logo.svg" alt="VK" class="social-icon">
+      </a>
+      <a href="https://www.tiktok.com/@diltv5" target="_blank" title="TikTok">
+        <img src="https://svg4.ru/data_svg/Tiny%20App%20Icons%20Collection/tiktok.svg" alt="TikTok" class="social-icon">
+      </a>
+      <a href="#" title="Discord (скоро)" onclick="alert('Discord сервер появится позже!'); return false;">
+        <img src="https://svg4.ru/data_svg/Colored%20Svg%20Logos%20Collection/discord-icon.svg" alt="Discord" class="social-icon">
+      </a>
     </div>
+    
     <p class="copyright">© 2025 Bird Game 3. Все права защищены.</p>
   </div>
 </footer>
 
 <script>
-  // Скрипт для плавной прокрутки
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
