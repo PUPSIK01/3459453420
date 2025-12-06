@@ -292,6 +292,24 @@
     font-weight: 400;
   }
 
+  .game-image {
+    flex: 1;
+    text-align: center;
+  }
+
+  .game-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 3px solid #ffd700;
+    transition: transform 0.3s ease;
+  }
+
+  .game-image img:hover {
+    transform: scale(1.02);
+  }
+
   .news-section {
     background: transparent;
     padding: 80px 20px;
@@ -599,6 +617,12 @@
       width: 28px;
       height: 28px;
     }
+    .about-content {
+      flex-direction: column;
+    }
+    .game-image {
+      order: -1;
+    }
   }
 </style>
 </head>
@@ -649,10 +673,8 @@
         <p>Игра сочетает в себе динамичные воздушные бои, стратегические элементы и увлекательный сюжет. Каждая птица обладает уникальными характеристиками и способностями.</p>
         <p>Следите за новостями и присоединяйтесь к сообществу!</p>
       </div>
-      <div style="flex:1;text-align:center;">
-        <div style="width:100%;height:300px;background:linear-gradient(135deg, #ffd700, #ff4d4d);border-radius:20px;display:flex;align-items:center;justify-content:center;color:#333;font-weight:bold;font-size:24px;font-family:'Orbitron', sans-serif;">
-          🦅 Изображение игры
-        </div>
+      <div class="game-image">
+        <img src="file:///C:/Users/samed/OneDrive/Рабочий%20стол/2025-12-04_194914.png" alt="Bird Game 3 - Скриншот игры" style="width: 100%; max-width: 500px; height: auto;">
       </div>
     </div>
   </div>
